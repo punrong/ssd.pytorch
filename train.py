@@ -167,7 +167,7 @@ def train():
             images, targets = next(batch_iterator)
         except StopIteration:
             batch_iterator = iter(data_loader)
-        images, targets = next(batch_iterator)
+            images, targets = next(batch_iterator)
 
         if args.cuda:
             images = Variable(images.cuda())
