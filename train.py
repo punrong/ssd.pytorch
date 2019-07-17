@@ -118,9 +118,8 @@ def train():
         ssd_net.loc.apply(weights_init)
         ssd_net.conf.apply(weights_init)
 
-    # optimizer = optim.SGD(net.parameters(), lr=args.lr, momentum=args.momentum,
-    #     #                       weight_decay=args.weight_decay)
-    optimizer = optim.Adam(net.parameters())
+    optimizer = optim.SGD(net.parameters(), lr=args.lr, momentum=args.momentum,
+                          weight_decay=args.weight_decay)
     criterion = MultiBoxLoss(cfg['num_classes'], 0.5, True, 0, True, 3, 0.5,
                              False, args.cuda)
 
@@ -152,7 +151,8 @@ def train():
     batch_iterator = iter(data_loader)
     for iteration in range(args.start_iter, cfg['max_iter']):
         if args.visdom and iteration != 0 and (iteration % epoch_size == 0):
-            update_vis_plot(epoch, loc_loss, conf_loss, iter_plot, epoch_plot, 'append', epoch_size)
+            update_vis_plot(epoch, loc_loss, conf_loss, epoch_plot, None,
+                            'append', epoch_size)
             # reset epoch loss counters
             loc_loss = 0
             conf_loss = 0
