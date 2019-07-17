@@ -152,8 +152,7 @@ def train():
     batch_iterator = iter(data_loader)
     for iteration in range(args.start_iter, cfg['max_iter']):
         if args.visdom and iteration != 0 and (iteration % epoch_size == 0):
-            update_vis_plot(epoch, loc_loss, conf_loss, epoch_plot, None,
-                            'append', epoch_size)
+            update_vis_plot(epoch, loc_loss, conf_loss, iter_plot, epoch_plot, 'append', epoch_size)
             # reset epoch loss counters
             loc_loss = 0
             conf_loss = 0
