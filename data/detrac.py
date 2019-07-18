@@ -82,7 +82,7 @@ class DETRACDetection(data.Dataset):
         """
 
         def __init__(self, root,
-                     image_sets=[('2007', 'trainval'), ('2012', 'trainval')],
+                     image_sets='trainval',
                      transform=None, target_transform=DETRACAnnotationTransform(),
                      dataset_name='VOC0712'):
             self.root = root
@@ -93,10 +93,9 @@ class DETRACDetection(data.Dataset):
             self._annopath = osp.join('%s', 'Annotations', '%s.xml')
             self._imgpath = osp.join('%s', 'JPEGImages', '%s.jpg')
             self.ids = list()
-            for (year, name) in image_sets:
-                rootpath = osp.join(self.root, 'VOC' + year)
-                for line in open(osp.join(rootpath, 'ImageSets', 'Main', name + '.txt')):
-                    self.ids.append((rootpath, line.strip()))
+            rootpath = osp.join(self.root)
+            for line in open(osp.join(rootpath, image_sets + '.txt')):
+                self.ids.append((rootpath, line.strip()))
 
         def __getitem__(self, index):
             im, gt, h, w = self.pull_item(index)
