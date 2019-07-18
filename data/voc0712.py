@@ -106,8 +106,8 @@ class VOCDetection(data.Dataset):
         self._annopath = osp.join('%s', 'Annotations', '%s.xml')
         self._imgpath = osp.join('%s', 'JPEGImages', '%s.jpg')
         self.ids = list()
-        rootpath = osp.join(self.root)
-        for line in open(osp.join(rootpath, 'VEHICLE','ImageSets', 'Main', image_sets + '.txt')):
+        rootpath = osp.join(self.root, 'VEHICLE')
+        for line in open(osp.join(rootpath, 'ImageSets', 'Main', image_sets + '.txt')):
                 self.ids.append((rootpath, line.strip()))
 
     def __getitem__(self, index):
