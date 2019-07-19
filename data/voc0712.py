@@ -125,9 +125,9 @@ class VOCDetection(data.Dataset):
         self.ids = list()
         for (name, length) in image_sets:
             rootpath = osp.join(self.root, 'VEHICLE')
-            for x in range(length):
+            for x in range(int(length)):
                 if x < 10:
-                    image = 'img0000'+ (x+1)
+                    image = 'img0000' + (x+1)
                 elif x < 100:
                     image = 'img000' + (x + 1)
                 elif x < 1000:
