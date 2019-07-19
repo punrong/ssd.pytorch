@@ -104,6 +104,7 @@ class VOCDetection(data.Dataset):
         self.target_transform = target_transform
         self.name = dataset_name
         self._annopath = osp.join('%s', 'Annotations', '%s.xml')
+        self._imgpath = osp.join('%s', 'JPEGImages', '%s', '%s.jpg')
         self.ids = list()
         rootpath = osp.join(self.root, 'VEHICLE')
         for line in open(osp.join(rootpath, 'ImageSets', 'Main', image_sets + '.txt')):
@@ -119,10 +120,9 @@ class VOCDetection(data.Dataset):
 
     def pull_item(self, index):
         img_id = self.ids[index]
-        self._imgpath = osp.join('%s', 'JPEGImages', img_id, '%s.jpg')
 
         target = ET.parse(self._annopath % img_id).getroot()
-        img = cv2.imread(self._imgpath % img_id)
+        img = cv2.imread(self._imgpath % img_id, img_id)
         height, width, channels = img.shape
 
         if self.target_transform is not None:
