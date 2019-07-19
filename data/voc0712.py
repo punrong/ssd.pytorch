@@ -30,10 +30,6 @@ VOC_CLASSES ={
 # note: if you used our download scripts, this should be right
 VOC_ROOT = osp.join(HOME, "data/VOCdevkit/")
 
-IMAGE_PATH ={
-
-}
-
 class VOCAnnotationTransform(object):
     """Transforms a VOC annotation into a Tensor of bbox coords and label index
     Initilized with a dictionary lookup of classnames to indexes
@@ -101,6 +97,21 @@ class VOCDetection(data.Dataset):
     """
 
     def __init__(self, root,
+                 image_sets=[('MVI_20011','664'), ('MVI_20012','936'), ('MVI_20032','437'), ('MVI_20033','784'),
+                            ('MVI_20034','800'), ('MVI_20035','800'), ('MVI_20051','906'), ('MVI_20052','964'),
+                            ('MVI_20061', '800'), ('MVI_20062','800'), ('MVI_20063','800'), ('MVI_20064','800'),
+                            ('MVI_20065','1200'), ('MVI_39761','1660'), ('MVI_39771','570') ('MVI_39781','1865'),
+                            ('MVI_39801','885'), ('MVI_39811','1070'), ('MVI_39821','880'), ('MVI_39851', '1420'),
+                            ('MVI_39861', '745'), ('MVI_39931', '1270'), ('MVI_40131','1645'), ('MVI_40141', '1600'),
+                            ('MVI_40152','1750'), ('MVI_40161','1490'), ('MVI_40162','1765'), ('MVI_40171','1150'),
+                            ('MVI_40172', '2635'), ('MVI_40181','1700'), ('MVI_40191','2495'), ('MVI_40192','2195'),
+                            ('MVI_40201','925'), ('MVI_40204','1225'), ('MVI_40211','1950'), ('MVI_40212','1690'),
+                            ('MVI_40213','1790'), ('MVI_40241','2320'), ('MVI_40243','1265'), ('MVI_40244','1345'),
+                            ('MVI_40732','2120'), ('MVI_40751','1145'),('MVI_40752','2025'), ('MVI_40871', '1720'),
+                            ('MVI_40962','1875'), ('MVI_40963','1820'), ('MVI_40981','1995'), ('MVI_40991','1820'),
+                            ('MVI_40992','2160'),('MVI_41063','1505'), ('MVI_41073','1825'), ('MVI_63521','2055'),
+                            ('MVI_63525','985'), ('MVI_63544','1160'), ('MVI_63552','1150'), ('MVI_63553','1405'),
+                            ('MVI_63554','1445'), ('MVI_63561','1285'), ('MVI_63562','1185'), ('MVI_63563','1390')],
                  transform=None, target_transform=VOCAnnotationTransform(),
                  dataset_name='VOC0712'):
         self.root = root
@@ -108,13 +119,26 @@ class VOCDetection(data.Dataset):
         self.target_transform = target_transform
         self.name = dataset_name
         self._annopath = osp.join('%s', 'Annotations', '%s.xml')
-        # self._imgpath = osp.join('%s', 'JPEGImages', '%s', '%s.jpg')
-        self._imgpath = list()
+        self._imgpath = osp.join('%s', 'JPEGImages', '%s', '%s.jpg')
+        self.ids_for_annotation = list()
         self.ids = list()
-        rootpath = osp.join(self.root, 'VEHICLE')
-        for line in open(osp.join(rootpath, 'ImageSets', 'Main', 'trainval' + '.txt')):
-                self.ids.append((rootpath, line.strip()))
-                self._imgpath.append((rootpath, 'JPEGImages', line.strip(), '%s.jpg'))
+        for (name, length) in image_sets:
+            rootpath = osp.join(self.root, 'VEHICLE')
+            for x in range(length):
+                if x < 10:
+                    image = 'img0000'+ (x+1)
+                elif x < 100:
+                    image = 'img000' + (x + 1)
+                elif x < 1000:
+                    image = 'img00' + (x + 1)
+                elif x < 10000:
+                    image = 'img0' + (x + 1)
+                self.ids.append(rootpath, name, image)
+                self.ids_for_annotation.append((rootpath, name))
+
+        # for line in open(osp.join(rootpath, 'ImageSets', 'Main', 'trainval' + '.txt')):
+        #         self.ids.append((rootpath, line.strip()))
+        #         self._imgpath.append((rootpath, 'JPEGImages', line.strip()))
 
     def __getitem__(self, index):
         im, gt, h, w = self.pull_item(index)
@@ -126,11 +150,12 @@ class VOCDetection(data.Dataset):
 
     def pull_item(self, index):
         img_id = self.ids[index]
-        img_path = self._imgpath[index]
+        img_annotation_id = self.ids_for_annotation[index]
+        # img_path = self._imgpath[index]
 
-        target = ET.parse(self._annopath % img_id).getroot()
-        img = cv2.imread(img_path % img_id)
-        # img = cv2.imread(self._imgpath % img_id)
+        target = ET.parse(self._annopath % img_annotation_id).getroot()
+        # img = cv2.imread(img_path % img_id)
+        img = cv2.imread(self._imgpath % img_id)
         height, width, channels = img.shape
 
         if self.target_transform is not None:
