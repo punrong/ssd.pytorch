@@ -98,7 +98,7 @@ class VOCDetection(data.Dataset):
     """
 
     def __init__(self, root,
-                 image_sets = 'trainval',
+                 image_sets='trainval',
                  transform=None, target_transform=VOCAnnotationTransform(),
                  dataset_name='VOC0712'):
         self.root = root
@@ -125,7 +125,7 @@ class VOCDetection(data.Dataset):
         img_id = self.ids[index]
 
         target = ET.parse(self._annopath % img_id).getroot()
-        img = cv2.imread(self._imgpath % img_id, img_id)
+        img = cv2.imread(self._imgpath % img_id % img_id)
         height, width, channels = img.shape
 
         if self.target_transform is not None:
