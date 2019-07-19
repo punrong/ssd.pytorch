@@ -127,13 +127,13 @@ class VOCDetection(data.Dataset):
             rootpath = osp.join(self.root, 'VEHICLE')
             for x in range(int(length)):
                 if x < 10:
-                    image = 'img0000' + (x+1)
+                    image = 'img0000' + str((x+1))
                 elif x < 100:
-                    image = 'img000' + (x + 1)
+                    image = 'img000' + str((x+1))
                 elif x < 1000:
-                    image = 'img00' + (x + 1)
+                    image = 'img00' + str((x+1))
                 elif x < 10000:
-                    image = 'img0' + (x + 1)
+                    image = 'img0' + str((x+1))
                 self.ids.append(rootpath, name, image)
                 self.ids_for_annotation.append((rootpath, name))
 
