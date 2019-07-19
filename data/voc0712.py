@@ -198,7 +198,9 @@ class VOCDetection(data.Dataset):
                 eg: ('001718', [('dog', (96, 13, 438, 332))])
         '''
         img_id = self.ids[index]
-        anno = ET.parse(self._annopath % img_id).getroot()
+        # anno = ET.parse(self._annopath % img_id).getroot()
+        img_annotation_id = self.ids_for_annotation[index]
+        anno = ET.parse(self._annopath % img_annotation_id).getroot()
         gt = self.target_transform(anno, 1, 1)
         return img_id[1], gt
 
