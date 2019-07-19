@@ -114,7 +114,7 @@ class VOCDetection(data.Dataset):
         rootpath = osp.join(self.root, 'VEHICLE')
         for line in open(osp.join(rootpath, 'ImageSets', 'Main', 'trainval' + '.txt')):
                 self.ids.append((rootpath, line.strip()))
-                self._imgpath.append((rootpath, 'JPEGImages', line.strip(), '%sjpg'))
+                self._imgpath.append((rootpath, 'JPEGImages', line.strip(), '%s.jpg'))
 
     def __getitem__(self, index):
         im, gt, h, w = self.pull_item(index)
