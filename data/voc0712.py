@@ -30,6 +30,9 @@ VOC_CLASSES ={
 # note: if you used our download scripts, this should be right
 VOC_ROOT = osp.join(HOME, "data/VOCdevkit/")
 
+IMAGE_PATH ={
+
+}
 
 class VOCAnnotationTransform(object):
     """Transforms a VOC annotation into a Tensor of bbox coords and label index
@@ -98,20 +101,20 @@ class VOCDetection(data.Dataset):
     """
 
     def __init__(self, root,
-                 image_sets='trainval',
                  transform=None, target_transform=VOCAnnotationTransform(),
                  dataset_name='VOC0712'):
         self.root = root
-        self.image_set = image_sets
         self.transform = transform
         self.target_transform = target_transform
         self.name = dataset_name
         self._annopath = osp.join('%s', 'Annotations', '%s.xml')
-        self._imgpath = osp.join('%s', 'JPEGImages', '%s', '%s.jpg')
+        # self._imgpath = osp.join('%s', 'JPEGImages', '%s', '%s.jpg')
+        self._imgpath = list()
         self.ids = list()
         rootpath = osp.join(self.root, 'VEHICLE')
-        for line in open(osp.join(rootpath, 'ImageSets', 'Main', image_sets + '.txt')):
+        for line in open(osp.join(rootpath, 'ImageSets', 'Main', 'trainval' + '.txt')):
                 self.ids.append((rootpath, line.strip()))
+                self._imgpath.append((rootpath, 'JPEGImages', line.strip(), '%sjpg'))
 
     def __getitem__(self, index):
         im, gt, h, w = self.pull_item(index)
@@ -123,11 +126,11 @@ class VOCDetection(data.Dataset):
 
     def pull_item(self, index):
         img_id = self.ids[index]
-        path = self._imgpath % img_id
-        path = self._imgpath % img_id
+        img_path = self.image_paths[index]
 
         target = ET.parse(self._annopath % img_id).getroot()
-        img = cv2.imread(path)
+        img = cv2.imread(img_path % img_id)
+        # img = cv2.imread(self._imgpath % img_id)
         height, width, channels = img.shape
 
         if self.target_transform is not None:
