@@ -42,7 +42,6 @@ class VOCAnnotationTransform(object):
         height (int): height
         width (int): width
     """
-
     def __init__(self, class_to_ind=None, keep_difficult=False):
         self.class_to_ind = class_to_ind or dict(
             zip(VOC_CLASSES, range(len(VOC_CLASSES))))
