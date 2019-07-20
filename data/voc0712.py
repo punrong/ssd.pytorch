@@ -17,6 +17,45 @@ VOC_CLASSES ={
 # note: if you used our download scripts, this should be right
 VOC_ROOT = osp.join(HOME, "data/VOCdevkit/")
 
+# def vocChecker(image_id, width, height, keep_difficult = False):
+#     target   = ET.parse(annopath % image_id).getroot()
+#     res      = []
+#
+#     for obj in target.iter('object'):
+#
+#         difficult = int(obj.find('difficult').text) == 1
+#
+#         if not keep_difficult and difficult:
+#             continue
+#
+#         name = obj.find('name').text.lower().strip()
+#         bbox = obj.find('bndbox')
+#
+#         pts    = ['xmin', 'ymin', 'xmax', 'ymax']
+#         bndbox = []
+#
+#         for i, pt in enumerate(pts):
+#
+#             cur_pt = int(bbox.find(pt).text) - 1
+#             # scale height or width
+#             cur_pt = float(cur_pt) / width if i % 2 == 0 else float(cur_pt) / height
+#
+#             bndbox.append(cur_pt)
+#
+#         print(name)
+#         label_idx =  dict(zip(CLASSES, range(len(CLASSES))))[name]
+#         bndbox.append(label_idx)
+#         res += [bndbox]  # [xmin, ymin, xmax, ymax, label_ind]
+#         # img_id = target.find('filename').text[:-4]
+#     print(res)
+#     try :
+#         print(np.array(res)[:,4])
+#         print(np.array(res)[:,:4])
+#     except IndexError:
+#         print("\nINDEX ERROR HERE !\n")
+#         exit(0)
+#     return res  # [[xmin, ymin, xmax, ymax, label_ind], ... ]
+
 class VOCAnnotationTransform(object):
     """Transforms a VOC annotation into a Tensor of bbox coords and label index
     Initilized with a dictionary lookup of classnames to indexes
@@ -60,9 +99,15 @@ class VOCAnnotationTransform(object):
             bndbox.append(label_idx)
             res += [bndbox]  # [xmin, ymin, xmax, ymax, label_ind]
             # img_id = target.find('filename').text[:-4]
+        print(res)
+        try:
+            print(np.array(res)[:, 4])
+            print(np.array(res)[:, :4])
+        except IndexError:
+            print("\nINDEX ERROR HERE !\n")
+            exit(0)
 
         return res  # [[xmin, ymin, xmax, ymax, label_ind], ... ]
-
 
 class VOCDetection(data.Dataset):
     """VOC Detection Dataset Object
