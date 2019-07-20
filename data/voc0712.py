@@ -1,3 +1,5 @@
+from typing import List
+
 from .config import HOME
 import os.path as osp
 import sys
@@ -10,9 +12,7 @@ if sys.version_info[0] == 2:
 else:
     import xml.etree.ElementTree as ET
 
-VOC_CLASSES =[
-    ('car'), ('bus'), ('van'), ('others')
-]
+VOC_CLASSES: List[str] = ['car', 'bus', 'van', 'others']
 
 # note: if you used our download scripts, this should be right
 VOC_ROOT = osp.join(HOME, "data/VOCdevkit/")
