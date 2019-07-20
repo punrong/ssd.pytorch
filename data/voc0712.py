@@ -86,6 +86,7 @@ class VOCAnnotationTransform(object):
             if not self.keep_difficult and difficult:
                 continue
             name = obj.find('name').text.lower.strip()
+            print(name)
             bbox = obj.find('bndbox')
 
             pts = ['xmin', 'ymin', 'xmax', 'ymax']
@@ -98,7 +99,7 @@ class VOCAnnotationTransform(object):
             label_idx = self.class_to_ind[name]
             bndbox.append(label_idx)
             res += [bndbox]  # [xmin, ymin, xmax, ymax, label_ind]
-            print(res)
+
             # img_id = target.find('filename').text[:-4]
         try:
             print(np.array(res)[:, 4])
