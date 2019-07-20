@@ -163,6 +163,7 @@ class VOCDetection(data.Dataset):
                 elif x < 10000:
                     image = 'img0' + str((x+1))
                 self.ids.append((rootpath, name, image))
+                print(self.ids)
                 self.ids_for_annotation.append((rootpath, name))
 
         # for line in open(osp.join(rootpath, 'ImageSets', 'Main', 'trainval' + '.txt')):
