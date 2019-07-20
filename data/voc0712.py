@@ -81,7 +81,6 @@ class VOCAnnotationTransform(object):
             a list containing lists of bounding boxes  [bbox coords, class name]
         """
         res = []
-        print(target.iter('object'))
         for obj in target.iter('object'):
             difficult = int(obj.find('difficult').text) == 1
             if not self.keep_difficult and difficult:
@@ -187,6 +186,8 @@ class VOCDetection(data.Dataset):
         print(target.iter('object'))
         # img = cv2.imread(img_path % img_id)
         img = cv2.imread(self._imgpath % img_id)
+        print(self._annopath % img_annotation_id)
+        print(self._imgpath % img_id)
         height, width, channels = img.shape
 
         if self.target_transform is not None:
