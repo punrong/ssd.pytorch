@@ -1,4 +1,3 @@
-
 from .config import HOME
 import os.path as osp
 import sys
@@ -18,49 +17,9 @@ VOC_CLASSES ={
 # note: if you used our download scripts, this should be right
 VOC_ROOT = osp.join(HOME, "data/VOCdevkit/")
 
-# def vocChecker(image_id, width, height, keep_difficult = False):
-#     target   = ET.parse(annopath % image_id).getroot()
-#     res      = []
-#
-#     for obj in target.iter('object'):
-#
-#         difficult = int(obj.find('difficult').text) == 1
-#
-#         if not keep_difficult and difficult:
-#             continue
-#
-#         name = obj.find('name').text.lower().strip()
-#         bbox = obj.find('bndbox')
-#
-#         pts    = ['xmin', 'ymin', 'xmax', 'ymax']
-#         bndbox = []
-#
-#         for i, pt in enumerate(pts):
-#
-#             cur_pt = int(bbox.find(pt).text) - 1
-#             # scale height or width
-#             cur_pt = float(cur_pt) / width if i % 2 == 0 else float(cur_pt) / height
-#
-#             bndbox.append(cur_pt)
-#
-#         print(name)
-#         label_idx =  dict(zip(CLASSES, range(len(CLASSES))))[name]
-#         bndbox.append(label_idx)
-#         res += [bndbox]  # [xmin, ymin, xmax, ymax, label_ind]
-#         # img_id = target.find('filename').text[:-4]
-#     print(res)
-#     try :
-#         print(np.array(res)[:,4])
-#         print(np.array(res)[:,:4])
-#     except IndexError:
-#         print("\nINDEX ERROR HERE !\n")
-#         exit(0)
-#     return res  # [[xmin, ymin, xmax, ymax, label_ind], ... ]
-
 class VOCAnnotationTransform(object):
     """Transforms a VOC annotation into a Tensor of bbox coords and label index
     Initilized with a dictionary lookup of classnames to indexes
-
     Arguments:
         class_to_ind (dict, optional): dictionary lookup of classnames -> indexes
             (default: alphabetic indexing of VOC's 20 classes)
@@ -82,69 +41,32 @@ class VOCAnnotationTransform(object):
         Returns:
             a list containing lists of bounding boxes  [bbox coords, class name]
         """
-        # res = []
-        # for obj in target.iter('object'):
-        #     difficult = int(obj.find('difficult').text) == 1
-        #     if not self.keep_difficult and difficult:
-        #         continue
-        #     name = obj.find('name').text.lower().strip()
-        #     bbox = obj.find('bndbox')
-        #
-        #     pts = ['xmin', 'ymin', 'xmax', 'ymax']
-        #     bndbox = []
-        #     for i, pt in enumerate(pts):
-        #         cur_pt = int(bbox.find(pt).text) - 1
-        #         # scale height or width
-        #         cur_pt = cur_pt / width if i % 2 == 0 else cur_pt / height
-        #         bndbox.append(cur_pt)
-        #     label_idx = self.class_to_ind[name]
-        #     bndbox.append(label_idx)
-        #     res += [bndbox]  # [xmin, ymin, xmax, ymax, label_ind]
-        #     # img_id = target.find('filename').text[:-4]
-        #
-        # return res  # [[xmin, ymin, xmax, ymax, label_ind], ... ]
-
         res = []
-
         for obj in target.iter('object'):
-
             difficult = int(obj.find('difficult').text) == 1
-
             if not self.keep_difficult and difficult:
                 continue
-
             name = obj.find('name').text.lower().strip()
             bbox = obj.find('bndbox')
 
             pts = ['xmin', 'ymin', 'xmax', 'ymax']
             bndbox = []
-
             for i, pt in enumerate(pts):
                 cur_pt = int(bbox.find(pt).text) - 1
                 # scale height or width
-                cur_pt = float(cur_pt) / width if i % 2 == 0 else float(cur_pt) / height
-
+                cur_pt = cur_pt / width if i % 2 == 0 else cur_pt / height
                 bndbox.append(cur_pt)
-
-            print(name)
             label_idx = self.class_to_ind[name]
             bndbox.append(label_idx)
             res += [bndbox]  # [xmin, ymin, xmax, ymax, label_ind]
             # img_id = target.find('filename').text[:-4]
-        print(res)
-        try:
-            print(np.array(res)[:, 4])
-            print(np.array(res)[:, :4])
-        except IndexError:
-            print("\nINDEX ERROR HERE !\n")
-            exit(0)
-        return res
+
+        return res  # [[xmin, ymin, xmax, ymax, label_ind], ... ]
+
 
 class VOCDetection(data.Dataset):
     """VOC Detection Dataset Object
-
     input is image, target is annotation
-
     Arguments:
         root (string): filepath to VOCdevkit folder.
         image_set (string): imageset to use (eg. 'train', 'val', 'test')
@@ -220,7 +142,6 @@ class VOCDetection(data.Dataset):
         img = cv2.imread(self._imgpath % img_id)
         height, width, channels = img.shape
 
-
         if self.target_transform is not None:
             target = self.target_transform(target, width, height)
 
@@ -236,10 +157,8 @@ class VOCDetection(data.Dataset):
 
     def pull_image(self, index):
         '''Returns the original image object at index in PIL form
-
         Note: not using self.__getitem__(), as any transformations passed in
         could mess up this functionality.
-
         Argument:
             index (int): index of img to show
         Return:
@@ -250,10 +169,8 @@ class VOCDetection(data.Dataset):
 
     def pull_anno(self, index):
         '''Returns the original annotation of image at index
-
         Note: not using self.__getitem__(), as any transformations passed in
         could mess up this functionality.
-
         Argument:
             index (int): index of img to get annotation of
         Return:
@@ -269,10 +186,8 @@ class VOCDetection(data.Dataset):
 
     def pull_tensor(self, index):
         '''Returns the original image at an index in tensor form
-
         Note: not using self.__getitem__(), as any transformations passed in
         could mess up this functionality.
-
         Argument:
             index (int): index of img to show
         Return:
