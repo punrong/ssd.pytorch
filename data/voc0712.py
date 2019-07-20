@@ -10,9 +10,9 @@ if sys.version_info[0] == 2:
 else:
     import xml.etree.ElementTree as ET
 
-VOC_CLASSES ={
-    'car', 'bus', 'van', 'others'
-}
+VOC_CLASSES =[
+    ('car'), ('bus'), ('van'), ('others')
+]
 
 # note: if you used our download scripts, this should be right
 VOC_ROOT = osp.join(HOME, "data/VOCdevkit/")
