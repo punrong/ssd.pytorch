@@ -98,8 +98,8 @@ class VOCAnnotationTransform(object):
             label_idx = self.class_to_ind[name]
             bndbox.append(label_idx)
             res += [bndbox]  # [xmin, ymin, xmax, ymax, label_ind]
+            print(res)
             # img_id = target.find('filename').text[:-4]
-        print(res)
         try:
             print(np.array(res)[:, 4])
             print(np.array(res)[:, :4])
