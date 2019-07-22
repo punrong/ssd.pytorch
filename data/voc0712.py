@@ -60,16 +60,16 @@ class VOCAnnotationTransform(object):
                 cur_pt = [left_xmin, top_ymin, width_xmax, height_ymax]
 
                 # scale height or width
-                # cur_pt[:] = [left_xmin/width, top_ymin/width, width_xmax/width, height_ymax/width] \
-                #     if id % 2 == 0 \
-                #     else [left_xmin/height, top_ymin/height, width_xmax/height, height_ymax/height]
+                cur_pt[:] = [left_xmin/width, top_ymin/width, width_xmax/width, height_ymax/width] \
+                    if id % 2 == 0 \
+                    else [left_xmin/height, top_ymin/height, width_xmax/height, height_ymax/height]
                 bndbox.append(cur_pt)
             label_idx = self.class_to_ind[name]
             bndbox.append(label_idx)
             res += [bndbox]  # [xmin, ymin, xmax, ymax, label_ind]
 
             # img_id = target.find('filename').text[:-4]
-        # print(res)
+        print(res)
         try:
             print(np.array(res)[:, 4])
             print(np.array(res)[:, :4])
@@ -145,7 +145,6 @@ class VOCDetection(data.Dataset):
 
     def pull_item(self, index):
         img_id = self.ids[index]
-        print(index)
         img_annotation_id = self.ids_for_annotation[index]
         # img_path = self._imgpath[index]
 
