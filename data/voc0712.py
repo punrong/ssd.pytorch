@@ -51,10 +51,10 @@ class VOCAnnotationTransform(object):
                 bbox = id.find('box')
 
                 pts = ['left', 'top', 'width', 'height']
-                print(pts[0])
                 bndbox = []
                 for i, pt in enumerate(pts):
                     print(bbox.attrib)
+                    print(pts)
                     print(bbox.get('left'))
                     cur_pt = int(bbox.get(pts)) - 1
                     # scale height or width
