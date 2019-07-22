@@ -46,13 +46,13 @@ class VOCAnnotationTransform(object):
             target_list = frame.find('target_list')
             target_id = target_list.find('target')
 
-            pts = ['left', 'top', 'width', 'height']
             bndbox = []
 
             for obj in target_id.iter('target'):
                 id = obj.get('id')
                 attribute = obj.find('attribute')
                 name = attribute.get('vehicle_type')
+                print(name)
                 bbox = obj.find('box')
 
                 left_xmin = float(bbox.get('left'))
