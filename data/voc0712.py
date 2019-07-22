@@ -42,7 +42,7 @@ class VOCAnnotationTransform(object):
             a list containing lists of bounding boxes  [bbox coords, class name]
         """
         res = []
-        sequence = target.find('name')
+        sequence = target.find('sequence')
         for frame in sequence.findall('frame'):
             target_list = frame.find('target_list')
             target_id = target_list.find('target')
