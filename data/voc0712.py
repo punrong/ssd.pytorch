@@ -55,6 +55,7 @@ class VOCAnnotationTransform(object):
                 bbox = id.find('box')
 
                 left_xmin = bbox.get['left']
+                print(left_xmin)
                 top_ymin = bbox.get['top']
                 width_xmax = bbox.get['width']
                 height_ymax = bbox.get['height']
