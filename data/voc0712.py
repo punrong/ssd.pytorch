@@ -40,7 +40,7 @@ class VOCAnnotationTransform(object):
             a list containing lists of bounding boxes  [bbox coords, class name]
         """
         res = []
-        print(frame_no[3:])
+        print(int(frame_no[3:]))
         for frame in target.findall('frame'):
             # if frame.get('num') != frame:
             #     continue
