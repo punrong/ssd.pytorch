@@ -150,6 +150,9 @@ class VOCDetection(data.Dataset):
         print(self._annopath % img_annotation_id)
         print(self._imgpath % img_id)
         height, width, channels = img.shape
+        print(height)
+        print(width)
+        print(channels)
 
         if self.target_transform is not None:
             target = self.target_transform(target, width, height)
