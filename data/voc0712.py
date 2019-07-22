@@ -69,7 +69,7 @@ class VOCAnnotationTransform(object):
             res += [bndbox]  # [xmin, ymin, xmax, ymax, label_ind]
 
             # img_id = target.find('filename').text[:-4]
-        print(res)
+        # print(res)
         try:
             print(np.array(res)[:, 4])
             print(np.array(res)[:, :4])
@@ -146,10 +146,8 @@ class VOCDetection(data.Dataset):
     def pull_item(self, index):
         img_id = self.ids[index]
         img_annotation_id = self.ids_for_annotation[index]
-        # img_path = self._imgpath[index]
 
         target = ET.parse(self._annopath % img_annotation_id).getroot()
-        # img = cv2.imread(img_path % img_id)
         img = cv2.imread(self._imgpath % img_id)
         print(self._annopath % img_annotation_id)
         print(self._imgpath % img_id)
