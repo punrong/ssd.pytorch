@@ -42,7 +42,8 @@ class VOCAnnotationTransform(object):
             a list containing lists of bounding boxes  [bbox coords, class name]
         """
         res = []
-        for frame in target.findall('frame'):
+        sequence = target.find('name')
+        for frame in sequence.findall('frame'):
             target_list = frame.find('target_list')
             target_id = target_list.find('target')
             for id in target_id.findall('id'):
@@ -128,10 +129,6 @@ class VOCDetection(data.Dataset):
                 self.ids.append((rootpath, name, image))
                 self.ids_for_annotation.append((rootpath, name))
 
-        # for line in open(osp.join(rootpath, 'ImageSets', 'Main', 'trainval' + '.txt')):
-        #         self.ids.append((rootpath, line.strip()))
-        #         self._imgpath.append((rootpath, 'JPEGImages', line.strip()))
-
     def __getitem__(self, index):
         im, gt, h, w = self.pull_item(index)
 
@@ -151,9 +148,6 @@ class VOCDetection(data.Dataset):
         print(self._annopath % img_annotation_id)
         print(self._imgpath % img_id)
         height, width, channels = img.shape
-        print(height)
-        print(width)
-        print(channels)
 
         if self.target_transform is not None:
             target = self.target_transform(target, width, height)
