@@ -43,9 +43,8 @@ class VOCAnnotationTransform(object):
         """
         res = []
         print("hello world")
-        for test in target.iter('attribute'):
-            print(test.attrib)
         for frame in target.findall('frame'):
+            print(frame.attrib)
             target_list = frame.find('target_list')
             target_id = target_list.find('target')
             for id in target_id.findall('id'):
