@@ -44,10 +44,10 @@ class VOCAnnotationTransform(object):
         res = []
         print("hello world")
         for frame in target.findall('frame'):
-            print(frame.attrib)
             target_list = frame.find('target_list')
             target_id = target_list.find('target')
             for id in target_id.findall('id'):
+                print(id.attrib)
                 attribute = id.find('attribute')
                 name = attribute.find('vehicle_type').text.lower.strip()
                 print(name)
