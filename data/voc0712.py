@@ -48,10 +48,9 @@ class VOCAnnotationTransform(object):
             target_id = target_list.find('target')
             for id in target_id.iter('target'):
                 attribute = id.find('attribute')
-                print(attribute.attrib)
                 name = attribute.get('vehicle_type')
-                print(name)
                 bbox = id.find('box')
+                print(bbox.attrib)
 
                 pts = ['height', 'width', 'top', 'left']
                 bndbox = []
