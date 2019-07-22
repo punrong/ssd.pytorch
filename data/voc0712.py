@@ -69,12 +69,12 @@ class VOCAnnotationTransform(object):
                 bndbox.append(cur_pt)
             label_idx = self.class_to_ind[name]
             bndbox.append(label_idx)
+            print(bndbox)
             res += [bndbox]  # [xmin, ymin, xmax, ymax, label_ind]
             break
 
             # img_id = target.find('filename').text[:-4]
         try:
-            print("HI")
             print(np.array(res)[:, 4])
             print(np.array(res)[:, :4])
         except IndexError:
