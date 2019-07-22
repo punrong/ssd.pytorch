@@ -45,24 +45,22 @@ class VOCAnnotationTransform(object):
         for frame in target.findall('frame'):
             target_list = frame.find('target_list')
             target_id = target_list.find('target')
+
+            pts = ['left', 'top', 'width', 'height']
+            bndbox = []
+
             for id in target_id.iter('target'):
                 attribute = id.find('attribute')
                 name = attribute.get('vehicle_type')
                 bbox = id.find('box')
 
-                pts = ['left', 'top', 'width', 'height']
-                bndbox = []
-                for i, pt in enumerate(pts):
-                    print(bbox.attrib)
-                    print(pts)
-                    print(bbox.get('left'))
-                    cur_pt = int(bbox.get(pts)) - 1
-                    # scale height or width
-                    cur_pt = cur_pt / width if i % 2 == 0 else cur_pt / height
-                    bndbox.append(cur_pt)
-                label_idx = self.class_to_ind[name]
-                bndbox.append(label_idx)
-                res += [bndbox]  # [xmin, ymin, xmax, ymax, label_ind]
+                cur_pt = int([bbox.get['left'], bbox.get['top'], bbox.get['width'], bbox.get['height']]) - 1
+                # scale height or width
+                cur_pt = cur_pt / width if id.get['id'] % 2 == 0 else cur_pt / height
+                bndbox.append(cur_pt)
+            label_idx = self.class_to_ind[name]
+            bndbox.append(label_idx)
+            res += [bndbox]  # [xmin, ymin, xmax, ymax, label_ind]
 
             # img_id = target.find('filename').text[:-4]
         print(res)
