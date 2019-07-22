@@ -42,8 +42,6 @@ class VOCAnnotationTransform(object):
         res = []
         for frame in target.findall('frame'):
             if int(frame.get('num')) != int(frame_no[3:]):
-                print(int(frame.get('num')))
-                print(int(frame_no[3:]))
                 continue
             target_list = frame.find('target_list')
             target_id = target_list.find('target')
