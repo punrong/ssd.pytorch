@@ -42,11 +42,11 @@ class VOCAnnotationTransform(object):
             a list containing lists of bounding boxes  [bbox coords, class name]
         """
         res = []
-        for obj in target.iter('frame num'):
+        for obj in target.iter('num'):
             # difficult = int(obj.find('difficult').text) == 1
             # if not self.keep_difficult and difficult:
             #     continue
-            name = obj.find('attribute vehicle_type').text.lower.strip()
+            name = obj.find('vehicle_type').text.lower.strip()
             bbox = obj.find('box')
 
             pts = ['height', 'width', 'top', 'left']
