@@ -51,6 +51,7 @@ class VOCAnnotationTransform(object):
                 bbox = id.find('box')
 
                 pts = ['left', 'top', 'width', 'height']
+                print(pts[0])
                 bndbox = []
                 for i, pt in enumerate(pts):
                     print(bbox.attrib)
