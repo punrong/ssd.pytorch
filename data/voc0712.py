@@ -48,7 +48,7 @@ class VOCAnnotationTransform(object):
 
             bndbox = []
 
-            for obj in frame.findall('target'):
+            for obj in target_list.findall('target'):
                 print(obj.get('id'))
                 attribute = obj.find('attribute')
                 name = attribute.get('vehicle_type')
