@@ -71,7 +71,7 @@ class VOCAnnotationTransform(object):
             break
 
             # img_id = target.find('filename').text[:-4]
-        # print(res)
+        print(res)
         try:
             print(np.array(res)[:, 4])
             print(np.array(res)[:, :4])
