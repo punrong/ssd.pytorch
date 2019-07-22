@@ -27,12 +27,11 @@ class VOCAnnotationTransform(object):
         height (int): height
         width (int): width
     """
-    def __init__(self, class_to_ind=None, keep_difficult=False):
+    def __init__(self, class_to_ind=None):
         self.class_to_ind = class_to_ind or dict(
             zip(VOC_CLASSES, range(len(VOC_CLASSES))))
-        self.keep_difficult = keep_difficult
 
-    def __call__(self, target, width, height):
+    def __call__(self, frame_no, target, width, height):
         """
         Arguments:
             target (annotation) : the target annotation to be made usable
@@ -150,11 +149,11 @@ class VOCDetection(data.Dataset):
         target = ET.parse(self._annopath % img_annotation_id).getroot()
         img = cv2.imread(self._imgpath % img_id)
         print(img_annotation_id)
-        print(img_id)
+        print(img_id[2])
         height, width, channels = img.shape
 
         if self.target_transform is not None:
-            target = self.target_transform(target, width, height)
+            target = self.target_transform(img_id[2], target, width, height)
 
         if self.transform is not None:
             target = np.array(target)
