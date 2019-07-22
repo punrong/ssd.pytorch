@@ -49,7 +49,7 @@ class VOCAnnotationTransform(object):
             for id in target_id.iter('target'):
                 attribute = id.find('attribute')
                 print(attribute.attrib)
-                name = attribute.find('vehicle_type').text.lower.strip()
+                name = attribute.get('vehicle_type')
                 print(name)
                 bbox = id.find('box')
 
