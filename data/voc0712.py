@@ -42,6 +42,7 @@ class VOCAnnotationTransform(object):
         res = []
         for frame in target.findall('frame'):
             if int(frame.get('num')) != int(frame_no[3:]):
+                print(frame.get('num') + "&" + frame_no[3:])
                 continue
             target_list = frame.find('target_list')
             target_id = target_list.find('target')
@@ -151,8 +152,6 @@ class VOCDetection(data.Dataset):
 
         target = ET.parse(self._annopath % img_annotation_id).getroot()
         img = cv2.imread(self._imgpath % img_id)
-        print(img_annotation_id)
-        print(img_id)
         height, width, channels = img.shape
 
         if self.target_transform is not None:
