@@ -62,7 +62,7 @@ class VOCAnnotationTransform(object):
 
                 cur_pt = [left_xmin, top_ymin, width_xmax, height_ymax]
 
-                print(id.get['id'])
+                print(id)
 
                 # scale height or width
                 cur_pt[:] = [left_xmin/width, top_ymin/width, width_xmax/width, height_ymax/width] \
