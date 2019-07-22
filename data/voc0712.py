@@ -40,7 +40,10 @@ class VOCAnnotationTransform(object):
             a list containing lists of bounding boxes  [bbox coords, class name]
         """
         res = []
+        print(frame_no[3:])
         for frame in target.findall('frame'):
+            # if frame.get('num') != frame:
+            #     continue
             target_list = frame.find('target_list')
             target_id = target_list.find('target')
 
@@ -55,13 +58,13 @@ class VOCAnnotationTransform(object):
                 top_ymin = float(bbox.get('top'))
                 width_xmax = float(bbox.get('width'))
                 height_ymax = float(bbox.get('height'))
-
                 cur_pt = [left_xmin, top_ymin, width_xmax, height_ymax]
 
                 # scale height or width
                 # cur_pt[:] = [left_xmin/width, top_ymin/width, width_xmax/width, height_ymax/width] \
                 #     if id % 2 == 0 \
                 #     else [left_xmin/height, top_ymin/height, width_xmax/height, height_ymax/height]
+
                 bndbox.append(cur_pt)
             label_idx = self.class_to_ind[name]
             bndbox.append(label_idx)
