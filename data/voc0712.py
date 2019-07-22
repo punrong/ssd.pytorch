@@ -69,7 +69,7 @@ class VOCAnnotationTransform(object):
                 #     if id % 2 == 0 \
                 #     else [left_xmin/height, top_ymin/height, width_xmax/height, height_ymax/height]
                 bndbox.append(cur_pt)
-            label_idx = self.class0_to_ind[name]
+            label_idx = self.class_to_ind[name]
             bndbox.append(label_idx)
             res += [bndbox]  # [xmin, ymin, xmax, ymax, label_ind]
 
