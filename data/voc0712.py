@@ -54,14 +54,13 @@ class VOCAnnotationTransform(object):
                 name = attribute.get('vehicle_type')
                 bbox = id.find('box')
 
-                left_xmin = bbox.get('left')
-                top_ymin = bbox.get('top')
-                width_xmax = bbox.get('width')
-                height_ymax = bbox.get('height')
+                left_xmin = int(bbox.get('left')) - 1
+                top_ymin = int(bbox.get('top')) - 1
+                width_xmax = int(bbox.get('width')) - 1
+                height_ymax = int(bbox.get('height')) - 1
 
-                cur_list = [left_xmin, top_ymin, width_xmax, height_ymax]
+                cur_pt = [left_xmin, top_ymin, width_xmax, height_ymax]
 
-                cur_pt = int(cur_list) - 1
                 # scale height or width
                 cur_pt = cur_pt / width if id.get['id'] % 2 == 0 else cur_pt / height
                 bndbox.append(cur_pt)
