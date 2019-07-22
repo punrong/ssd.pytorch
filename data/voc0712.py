@@ -40,10 +40,9 @@ class VOCAnnotationTransform(object):
             a list containing lists of bounding boxes  [bbox coords, class name]
         """
         res = []
-        print(int(frame_no[3:]))
         for frame in target.findall('frame'):
-            # if frame.get('num') != frame:
-            #     continue
+            if frame.get('num') != int(frame_no[3:]):
+                continue
             target_list = frame.find('target_list')
             target_id = target_list.find('target')
 
@@ -69,6 +68,7 @@ class VOCAnnotationTransform(object):
             label_idx = self.class_to_ind[name]
             bndbox.append(label_idx)
             res += [bndbox]  # [xmin, ymin, xmax, ymax, label_ind]
+            break
 
             # img_id = target.find('filename').text[:-4]
         # print(res)
@@ -152,7 +152,7 @@ class VOCDetection(data.Dataset):
         target = ET.parse(self._annopath % img_annotation_id).getroot()
         img = cv2.imread(self._imgpath % img_id)
         print(img_annotation_id)
-        print(img_id[2])
+        print(img_id)
         height, width, channels = img.shape
 
         if self.target_transform is not None:
