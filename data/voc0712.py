@@ -59,7 +59,8 @@ class VOCAnnotationTransform(object):
                 top_ymin = float(bbox.get('top'))
                 width_xmax = float(bbox.get('width'))
                 height_ymax = float(bbox.get('height'))
-                cur_pt = [left_xmin, top_ymin, width_xmax, height_ymax]
+                label_idx = self.class_to_ind[name]
+                cur_pt = [left_xmin, top_ymin, width_xmax, height_ymax, label_idx]
 
                 # scale height or width
                 # cur_pt[:] = [left_xmin/width, top_ymin/width, width_xmax/width, height_ymax/width] \
@@ -67,8 +68,8 @@ class VOCAnnotationTransform(object):
                 #     else [left_xmin/height, top_ymin/height, width_xmax/height, height_ymax/height]
 
                 bndbox.append(cur_pt)
-            label_idx = self.class_to_ind[name]
-            bndbox.append(label_idx)
+
+            # bndbox.append(label_idx)
             print(bndbox)
             res += [bndbox]  # [xmin, ymin, xmax, ymax, label_ind]
             break
