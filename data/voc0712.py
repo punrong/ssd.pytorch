@@ -62,7 +62,7 @@ class VOCAnnotationTransform(object):
                 cur_pt = [left_xmin, top_ymin, width_xmax, height_ymax]
 
                 # scale height or width
-                cur_pt[:] = [x / width for x in cur_pt] if id.get['id'] % 2 == 0 else [y / height for y in cur_pt]
+                cur_pt[:] = [x / width for x in cur_pt] if int(id.get['id']) % 2 == 0 else [y / height for y in cur_pt]
                 bndbox.append(cur_pt)
             label_idx = self.class_to_ind[name]
             bndbox.append(label_idx)
