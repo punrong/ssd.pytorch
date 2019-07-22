@@ -14,7 +14,6 @@ else:
 
 VOC_CLASSES = ['car', 'bus', 'van', 'others']
 
-# note: if you used our download scripts, this should be right
 VOC_ROOT = osp.join(HOME, "data/VOCdevkit/")
 
 class VOCAnnotationTransform(object):
@@ -49,10 +48,8 @@ class VOCAnnotationTransform(object):
             bndbox = []
 
             for obj in target_id.iter('target'):
-                id = obj.get('id')
                 attribute = obj.find('attribute')
                 name = attribute.get('vehicle_type')
-                print(name)
                 bbox = obj.find('box')
 
                 left_xmin = float(bbox.get('left'))
@@ -61,8 +58,6 @@ class VOCAnnotationTransform(object):
                 height_ymax = float(bbox.get('height'))
 
                 cur_pt = [left_xmin, top_ymin, width_xmax, height_ymax]
-
-                print(id)
 
                 # scale height or width
                 # cur_pt[:] = [left_xmin/width, top_ymin/width, width_xmax/width, height_ymax/width] \
@@ -150,6 +145,7 @@ class VOCDetection(data.Dataset):
 
     def pull_item(self, index):
         img_id = self.ids[index]
+        print(index)
         img_annotation_id = self.ids_for_annotation[index]
         # img_path = self._imgpath[index]
 
