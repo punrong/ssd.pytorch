@@ -107,7 +107,7 @@ class VOCDetection(data.Dataset):
         self.ids_for_annotation = list()
         self.ids = list()
         path = list()
-        for name in image_sets:
+        for (name, length) in image_sets:
             rootpath = osp.join(self.root, 'VEHICLE')
             path.append((rootpath, name))
             # image = 'img{0:05d}'.format(x+1)
