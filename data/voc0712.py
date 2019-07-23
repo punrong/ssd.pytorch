@@ -47,6 +47,7 @@ class VOCAnnotationTransform(object):
             bndbox = []
 
             for obj in target_list.findall('target'):
+                print(obj.get('id'))
                 attribute = obj.find('attribute')
                 name = attribute.get('vehicle_type')
                 bbox = obj.find('box')
@@ -69,8 +70,6 @@ class VOCAnnotationTransform(object):
             print(bndbox)
             res += [bndbox]  # [xmin, ymin, xmax, ymax, label_ind]
             break
-
-            # img_id = target.find('filename').text[:-4]
         try:
             print(np.array(res)[:, 4])
             print(np.array(res)[:, :4])
