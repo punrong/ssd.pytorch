@@ -1,0 +1,86 @@
+Loading base network...
+Initializing weights...
+Loading the dataset...
+Training SSD on: VOC0712
+Using the specified args:
+Namespace(basenet='vgg16_reducedfc.pth', batch_size=32, cuda=True, dataset='VOC', dataset_root='/home/mlv_punrong/data/VOCdevkit/', gamma=0.1, lr=0.001, momentum=0.9, num_workers=4, resume=None, save_folder='weights/', start_iter=0, visdom=True, weight_decay=0.0005)
+/home/mlv_punrong/data/VOCdevkit/VEHICLE/JPEGImages/MVI_63563/img00286.jpg
+/home/mlv_punrong/data/VOCdevkit/VEHICLE/Annotations/MVI_63563.xml
+33
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+[[869.33 121.6   91.67  47.93   0.  ]]
+[[[  1.    231.47   80.     78.86    0.   ]
+  [ 26.667 213.33  199.403 111.94    2.   ]
+  [385.07  109.87   90.6    41.53    0.   ]
+  [416.    137.6   111.93   51.13    0.   ]]]
+[[[  1.    231.47   80.     78.86    0.   ]
+  [ 26.667 213.33  199.403 111.94    2.   ]
+  [385.07  109.87   90.6    41.53    0.   ]
+  [416.    137.6   111.93   51.13    0.   ]
+  [869.33  121.6    91.67   47.93    0.   ]
+  [471.47  112.     89.53   35.13    0.   ]
+  [669.87   92.8    78.86   38.33    0.   ]
+  [712.53  221.87  140.74   81.      0.   ]
+  [693.33   58.667  61.8    31.933   0.   ]
+  [737.07   94.933  78.86   39.397   0.   ]
+  [577.07  308.27  254.86  187.66    2.   ]
+  [790.4    56.533  56.47   26.6     0.   ]
+  [163.2   316.8   245.27  118.33    0.   ]]]
+[[[  1.    231.47   80.     78.86    0.   ]
+  [ 26.667 213.33  199.403 111.94    2.   ]
+  [385.07  109.87   90.6    41.53    0.   ]
+  [416.    137.6   111.93   51.13    0.   ]]]
+/home/mlv_punrong/data/VOCdevkit/VEHICLE/JPEGImages/MVI_63525/img00192.jpg
+/home/mlv_punrong/data/VOCdevkit/VEHICLE/Annotations/MVI_63525.xml
+3
+6
+
+INDEX ERROR HERE !
+
+/home/mlv_punrong/data/VOCdevkit/VEHICLE/JPEGImages/MVI_63563/img01069.jpg
+/home/mlv_punrong/data/VOCdevkit/VEHICLE/Annotations/MVI_63563.xml
+126
+127
+128
+130
+131
+132
+133
+134
+[[510.29 200.75 158.87  78.65   0.  ]]
+[[[195.63  125.87  130.7    54.12    0.   ]
+  [878.51   99.2    82.49   50.92    0.   ]
+  [595.41   50.133  67.78   37.054   0.   ]
+  [887.25  144.     73.75   65.      0.   ]]]
+[[[195.63  125.87  130.7    54.12    0.   ]
+  [878.51   99.2    82.49   50.92    0.   ]
+  [595.41   50.133  67.78   37.054   0.   ]
+  [887.25  144.     73.75   65.      0.   ]
+  [510.29  200.75  158.87   78.65    0.   ]
+  [751.15   26.453  48.57   29.587   0.   ]
+  [783.79   46.507  63.5    33.213   0.   ]
+  [799.79   60.373  69.05   38.12    0.   ]]]
+[[[195.63  125.87  130.7    54.12    0.   ]
+  [878.51   99.2    82.49   50.92    0.   ]
+  [595.41   50.133  67.78   37.054   0.   ]
+  [887.25  144.     73.75   65.      0.   ]]]
+/home/mlv_punrong/data/VOCdevkit/VEHICLE/JPEGImages/MVI_40212/img00530.jpg
+/home/mlv_punrong/data/VOCdevkit/VEHICLE/Annotations/MVI_40212.xml
+63
+65
+66
+67
+
+INDEX ERROR HERE !
+
