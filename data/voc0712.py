@@ -158,6 +158,7 @@ class VOCDetection(data.Dataset):
 
         if self.transform is not None:
             target = np.array(target)
+            print(target)
             img, boxes, labels = self.transform(img, target[:, :4], target[:, 4])
             print('img' + img + 'boxes' + boxes + 'labels' + labels)
             # to rgb
