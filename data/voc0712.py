@@ -124,12 +124,11 @@ class VOCDetection(data.Dataset):
         self.ids = list()
         rootpath = osp.join(self.root, 'VEHICLE')
         for name in image_sets:
-            path = {rootpath, name}
             # image = 'img{0:05d}'.format(x+1)
 
             #TODO : Check xml files and remove ids that do not have any boxes
-            target = ET.parse(self._annopath % path).getroot()
-            print(path)
+            target = ET.parse(self._annopath % (rootpath, name)).getroot()
+            print(self._annopath % (rootpath, name))
             for frame in target.findall('frame'):
                 image = 'img{0:05d}'.format(int(frame.get('num')))
                 self.ids.append((rootpath, name, image))
