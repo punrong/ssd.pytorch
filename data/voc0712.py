@@ -115,7 +115,8 @@ class VOCDetection(data.Dataset):
             #TODO : Check xml files and remove ids that do not have any boxes
             target = ET.parse(self._annopath % path[0]).getroot()
             for frame in target.findall('frame'):
-                self.ids.append((rootpath, name, 'img{0:05}'.format(frame.get('num'))))
+                image = 'img{0:05d}'.format(frame.get('num'))
+                self.ids.append((rootpath, name, image))
                 self.ids_for_annotation.append((rootpath, name))
         # for (name, length) in image_sets:
         #     rootpath = osp.join(self.root, 'VEHICLE')
