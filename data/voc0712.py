@@ -14,7 +14,7 @@ else:
 
 VOC_CLASSES = ['car', 'bus', 'van', 'others']
 
-VOC_ROOT = osp.join(HOME, "data/VOCdevkit/")
+VOC_ROOT = osp.join(HOME, "data", "VOCdevkit")
 
 class VOCAnnotationTransform(object):
     """Transforms a VOC annotation into a Tensor of bbox coords and label index
@@ -47,7 +47,7 @@ class VOCAnnotationTransform(object):
             bndbox = []
 
             for obj in target_list.findall('target'):
-                print(obj.get('id'))
+                # print(obj.get('id'))
                 attribute = obj.find('attribute')
                 name = attribute.get('vehicle_type')
                 bbox = obj.find('box')
@@ -57,7 +57,7 @@ class VOCAnnotationTransform(object):
                 width_anno = float(bbox.get('width'))
                 height_anno = float(bbox.get('height'))
                 label_idx = self.class_to_ind[name]
-                cur_pt = [left, top, width_anno, height_anno, label_idx]
+                cur_pt = [left / width, top / height, (left + width_anno) / width, (top + height_anno) / height, label_idx]
 
                 # scale height or width
                 # cur_pt[:] = [left_xmin/width, top_ymin/width, width_xmax/width, height_ymax/width] \
@@ -68,14 +68,8 @@ class VOCAnnotationTransform(object):
 
             # bndbox.append(label_idx)
             # print(bndbox)
-            res += [bndbox]  # [xmin, ymin, xmax, ymax, label_ind]
+            res = bndbox  # [xmin, ymin, xmax, ymax, label_ind]
             break
-        try:
-            print(np.array(res)[:, 4])
-            print(np.array(res)[:, :4])
-        except IndexError:
-            print("\nINDEX ERROR HERE !\n")
-            exit(0)
 
         return res  # [[xmin, ymin, xmax, ymax, label_ind], ... ]
 
@@ -124,14 +118,18 @@ class VOCDetection(data.Dataset):
         for (name, length) in image_sets:
             rootpath = osp.join(self.root, 'VEHICLE')
             for x in range(int(length)):
-                if x < 10:
-                    image = 'img0000' + str((x+1))
-                elif x < 100:
-                    image = 'img000' + str((x+1))
-                elif x < 1000:
-                    image = 'img00' + str((x+1))
-                elif x < 10000:
-                    image = 'img0' + str((x+1))
+                image = 'img{0:05d}'.format(x+1)
+                # if x < 10:
+                #     image = 'img0000' + str((x+1))
+                # elif x < 100:
+                #     image = 'img000' + str((x+1))
+                # elif x < 1000:
+                #     image = 'img00' + str((x+1))
+                # elif x < 10000:
+                #     image = 'img0' + str((x+1))
+
+                #TODO : Check xml files and remove ids that do not have any boxes
+
                 self.ids.append((rootpath, name, image))
                 self.ids_for_annotation.append((rootpath, name))
 
@@ -149,18 +147,25 @@ class VOCDetection(data.Dataset):
 
         target = ET.parse(self._annopath % img_annotation_id).getroot()
         img = cv2.imread(self._imgpath % img_id)
-        height, width, channels = img.shape
-        print(self._imgpath % img_id)
-        print(self._annopath % img_annotation_id)
+        try:
+            height, width, channels = img.shape
+        except AttributeError:
+            print(img_id)
+            exit(0)
+        # print(self._imgpath % img_id)
+        # print(self._annopath % img_annotation_id)
 
         if self.target_transform is not None:
             target = self.target_transform(img_id[2], target, width, height)
 
         if self.transform is not None:
-            target = np.array(target)
-            print(target)
+            target = np.array(target).reshape(-1, 5)
             img, boxes, labels = self.transform(img, target[:, :4], target[:, 4])
-            print('img' + img + 'boxes' + boxes + 'labels' + labels)
+            # print('img shape : {0}'.format(img.shape))
+            # print('boxes : ')
+            # print(boxes)
+            # print('labels : ')
+            # print(labels)
             # to rgb
             img = img[:, :, (2, 1, 0)]
             # img = img.transpose(2, 0, 1)
