@@ -150,6 +150,8 @@ class VOCDetection(data.Dataset):
         target = ET.parse(self._annopath % img_annotation_id).getroot()
         img = cv2.imread(self._imgpath % img_id)
         height, width, channels = img.shape
+        print(self._imgpath % img_id)
+        print(self._annopath % img_annotation_id)
 
         if self.target_transform is not None:
             target = self.target_transform(img_id[2], target, width, height)
@@ -157,7 +159,7 @@ class VOCDetection(data.Dataset):
         if self.transform is not None:
             target = np.array(target)
             img, boxes, labels = self.transform(img, target[:, :4], target[:, 4])
-            print('img'+ img + 'boxes' + boxes + 'labels' + labels)
+            print('img' + img + 'boxes' + boxes + 'labels' + labels)
             # to rgb
             img = img[:, :, (2, 1, 0)]
             # img = img.transpose(2, 0, 1)
