@@ -67,7 +67,7 @@ class VOCAnnotationTransform(object):
                 bndbox.append(cur_pt)
 
             # bndbox.append(label_idx)
-            print(bndbox)
+            # print(bndbox)
             res += [bndbox]  # [xmin, ymin, xmax, ymax, label_ind]
             break
         try:
