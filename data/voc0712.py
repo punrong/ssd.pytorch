@@ -115,6 +115,7 @@ class VOCDetection(data.Dataset):
 
                 #TODO : Check xml files and remove ids that do not have any boxes
                 target = ET.parse(self._annopath % path[0]).getroot()
+                print(self._annopath % path[0])
                 for frame in target.findall('frame'):
                     if int(frame.get('num')) != int(image[3:]):
                         check = 0
