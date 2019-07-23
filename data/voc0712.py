@@ -151,6 +151,7 @@ class VOCDetection(data.Dataset):
 
         target = ET.parse(self._annopath % img_annotation_id).getroot()
         img = cv2.imread(self._imgpath % img_id)
+        print(self._imgpath % img_id)
         try:
             height, width, channels = img.shape
         except AttributeError:
