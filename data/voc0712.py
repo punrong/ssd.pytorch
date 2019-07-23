@@ -47,7 +47,6 @@ class VOCAnnotationTransform(object):
             bndbox = []
 
             for obj in target_list.findall('target'):
-                # print(obj.get('id'))
                 attribute = obj.find('attribute')
                 name = attribute.get('vehicle_type')
                 bbox = obj.find('box')
@@ -57,17 +56,9 @@ class VOCAnnotationTransform(object):
                 width_anno = float(bbox.get('width'))
                 height_anno = float(bbox.get('height'))
                 label_idx = self.class_to_ind[name]
+
                 cur_pt = [left / width, top / height, (left + width_anno) / width, (top + height_anno) / height, label_idx]
-
-                # scale height or width
-                # cur_pt[:] = [left_xmin/width, top_ymin/width, width_xmax/width, height_ymax/width] \
-                #     if int(obj.get('id')) % 2 == 0 \
-                #     else [left_xmin/height, top_ymin/height, width_xmax/height, height_ymax/height]
-
                 bndbox.append(cur_pt)
-
-            # bndbox.append(label_idx)
-            # print(bndbox)
             res = bndbox  # [xmin, ymin, xmax, ymax, label_ind]
             break
 
@@ -119,19 +110,20 @@ class VOCDetection(data.Dataset):
             rootpath = osp.join(self.root, 'VEHICLE')
             for x in range(int(length)):
                 image = 'img{0:05d}'.format(x+1)
-                # if x < 10:
-                #     image = 'img0000' + str((x+1))
-                # elif x < 100:
-                #     image = 'img000' + str((x+1))
-                # elif x < 1000:
-                #     image = 'img00' + str((x+1))
-                # elif x < 10000:
-                #     image = 'img0' + str((x+1))
 
                 #TODO : Check xml files and remove ids that do not have any boxes
 
-                self.ids.append((rootpath, name, image))
-                self.ids_for_annotation.append((rootpath, name))
+                target = ET.parse(self._annopath % rootpath % name).getroot()
+                for frame in target.findall('frame'):
+                    if int(frame.get('num')) != int(image[3:]):
+                        check = 0
+                        continue
+                    check = 1
+                if check == 0:
+                    continue
+                else:
+                    self.ids.append((rootpath, name, image))
+                    self.ids_for_annotation.append((rootpath, name))
 
     def __getitem__(self, index):
         im, gt, h, w = self.pull_item(index)
@@ -152,8 +144,6 @@ class VOCDetection(data.Dataset):
         except AttributeError:
             print(img_id)
             exit(0)
-        # print(self._imgpath % img_id)
-        # print(self._annopath % img_annotation_id)
 
         if self.target_transform is not None:
             target = self.target_transform(img_id[2], target, width, height)
