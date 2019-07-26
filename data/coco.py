@@ -14,7 +14,7 @@ ANNOTATIONS = 'annotations'
 COCO_API = 'PythonAPI'
 INSTANCES_SET = 'instances_{}.json'
 COCO_CLASSES = ('person', 'bicycle', 'car', 'motorcycle', 'airplane', 'bus',
-                'train', 'truck', 'boat', 'traffic light', 'fire', 'hydrant',
+                'train', 'truck', 'boat', 'traffic light', 'fire hydrant',
                 'stop sign', 'parking meter', 'bench', 'bird', 'cat', 'dog',
                 'horse', 'sheep', 'cow', 'elephant', 'bear', 'zebra',
                 'giraffe', 'backpack', 'umbrella', 'handbag', 'tie',
@@ -25,7 +25,7 @@ COCO_CLASSES = ('person', 'bicycle', 'car', 'motorcycle', 'airplane', 'bus',
                 'sandwich', 'orange', 'broccoli', 'carrot', 'hot dog', 'pizza',
                 'donut', 'cake', 'chair', 'couch', 'potted plant', 'bed',
                 'dining table', 'toilet', 'tv', 'laptop', 'mouse', 'remote',
-                'keyboard', 'cell phone', 'microwave oven', 'toaster', 'sink',
+                'keyboard', 'cell phone', 'microwave', 'oven', 'toaster', 'sink',
                 'refrigerator', 'book', 'clock', 'vase', 'scissors',
                 'teddy bear', 'hair drier', 'toothbrush')
 
@@ -122,7 +122,8 @@ class COCODetection(data.Dataset):
         ann_ids = self.coco.getAnnIds(imgIds=img_id)
 
         target = self.coco.loadAnns(ann_ids)
-        path = osp.join(self.root, self.coco.loadImgs(img_id)[0]['file_name'])
+        file_name = self.coco.loadImgs(img_id)[0]['file_name']
+        path = osp.join(self.root, file_name.split('_', )[2])
         assert osp.exists(path), 'Image path does not exist: {}'.format(path)
         img = cv2.imread(osp.join(self.root, path))
         height, width, _ = img.shape
