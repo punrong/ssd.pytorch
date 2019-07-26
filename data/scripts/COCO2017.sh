@@ -67,10 +67,10 @@ echo "Creating trainval35k dataset..."
 
 # combine train and val 
 echo "Combining train and val images"
-mkdir ../images/trainval35k
-cd ../images/train2017
+mkdir ./images/trainval35k
+cd ./images/train2017
 find -maxdepth 1 -name '*.jpg' -exec cp -t ../trainval35k {} + # dir too large for cp
-cd ../val2017
+cd ./val2017
 find -maxdepth 1 -name '*.jpg' -exec cp -t ../trainval35k {} +
 
 
