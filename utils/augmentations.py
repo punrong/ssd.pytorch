@@ -32,17 +32,19 @@ def jaccard_numpy(box_a, box_b):
     return inter / union  # [A,B]
 
 def crop_bounding_box(image, boxes, labels):
-    xmax = boxes[:, 2]
-    xmin = boxes[:, 0]
-    ymax = boxes[:, 3]
-    ymin = boxes[:, 1]
-    width = xmax - xmin
-    height = ymax - ymin
+    new_boxes = []
+    for c in boxes:
+
+        xmax = c[2]
+        xmin = c[0]
+        ymax = c[3]
+        ymin = c[4]
+        width = xmax - xmin
+        height = ymax - ymin
 
     # set bounding box to 0, 0, left + width, top + height
-    new_boxes =[]
-    new_boxes.append([0, 0, width, height])
-    print(new_boxes)
+        new_boxes.append([0, 0, width, height])
+        print(new_boxes)
 
     current_image = image
     # crop images to width = xmax - xmin & height = ymax - ymin
