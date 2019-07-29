@@ -43,6 +43,7 @@ def crop_bounding_box(image, boxes, labels):
 
     # new bounding box
     new_box = np.array([0, 0, width, height])
+    print(new_box.shape)
 
     # cropped image
     current_image = image
@@ -110,6 +111,7 @@ class ToAbsoluteCoords(object):
 class ToPercentCoords(object):
     def __call__(self, image, boxes=None, labels=None):
         height, width, channels = image.shape
+        print(boxes.shape)
         boxes[:, 0] /= width
         boxes[:, 2] /= width
         boxes[:, 1] /= height
