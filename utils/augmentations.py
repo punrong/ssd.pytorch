@@ -33,7 +33,8 @@ def jaccard_numpy(box_a, box_b):
 
 def crop_bounding_box(image, boxes, labels):
     new_boxes = []
-    for i in boxes.size:
+    print(boxes.size)
+    for i in range(boxes.size):
 
         xmax = boxes[i:2]
         xmin = boxes[i:0]
