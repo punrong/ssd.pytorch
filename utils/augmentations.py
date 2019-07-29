@@ -58,13 +58,13 @@ def crop_bounding_box(image, boxes, labels):
     height = ymax - ymin
 
     # set bounding box to 0, 0, left + width, top + height
-    boxes = np.array([0, 0, int(width), int(height)])
+    new_boxes = np.array([0, 0, int(width), int(height)])
 
     current_image = image
     # crop images to width = xmax - xmin & height = ymax - ymin
-    current_image = current_image[boxes[1]:boxes[3], boxes[0]:boxes[2], :]
+    current_image = current_image[new_boxes[1]:new_boxes[3], new_boxes[0]:new_boxes[2], :]
 
-    return current_image, boxes, labels
+    return current_image, new_boxes, labels
 
 class Compose(object):
     """Composes several augmentations together.
