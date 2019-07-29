@@ -229,6 +229,8 @@ class RandomSampleCrop(object):
             (0.9, None),
             # randomly sample a patch
             (None, None),
+            # use a bbox to train
+            "bbox",
         )
 
     def __call__(self, image, boxes=None, labels=None):
@@ -238,7 +240,9 @@ class RandomSampleCrop(object):
             mode = random.choice(self.sample_options)
             if mode is None:
                 return image, boxes, labels
-
+            if mode is "bbox":
+                # image, boxes, labels = new_function(image, boxes, labels)
+                return image, boxes, labels
             min_iou, max_iou = mode
             if min_iou is None:
                 min_iou = float('-inf')
