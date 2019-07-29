@@ -40,12 +40,13 @@ def crop_bounding_box(image, boxes, labels):
     height = ymax - ymin
 
     new_boxes = np.array([0, 0, width, height])
+    print(new_boxes)
     # set bounding box to 0, 0, left + width, top + height
     # new_boxes.append([0, 0, width, height])
     current_image = image
     print(current_image.shape)
     # crop images to width = xmax - xmin & height = ymax - ymin
-    current_image = current_image[new_boxes[0]:new_boxes[2], new_boxes[1]:new_boxes[3]]
+    current_image = current_image[int(xmin):int(xmax), int(ymin):int(ymax)]
     print(current_image.shape)
 
     return current_image, new_boxes, current_labels
