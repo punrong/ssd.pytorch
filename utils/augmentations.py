@@ -32,15 +32,17 @@ def jaccard_numpy(box_a, box_b):
     return inter / union  # [A,B]
 
 def crop_bounding_box(image, boxes, labels):
+    idx = random.choice(labels)
+    print(idx)
     new_boxes = []
     print(boxes)
     print(labels)
     print(labels.size)
-    xmax = boxes[0:2]
+    xmax = boxes[idx:2]
     print(xmax)
-    xmin = boxes[0:0]
-    ymax = boxes[0:3]
-    ymin = boxes[0:1]
+    xmin = boxes[idx:0]
+    ymax = boxes[idx:3]
+    ymin = boxes[idx:1]
     width = xmax - xmin
     height = ymax - ymin
     # print(height)
