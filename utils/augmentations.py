@@ -41,11 +41,12 @@ def crop_bounding_box(image, boxes, labels):
 
     # set bounding box to 0, 0, left + width, top + height
     new_boxes =[]
-    new_boxes.append([0, 0, int(width), int(height)])
+    new_boxes.append([0, 0, width, height])
 
     current_image = image
     # crop images to width = xmax - xmin & height = ymax - ymin
-    current_image = current_image[new_boxes[1]:new_boxes[3], new_boxes[0]:new_boxes[2], :]
+    current_image = current_image[new_boxes[1]:new_boxes[3], new_boxes[0]:new_boxes[2],
+                    :]
 
     return current_image, new_boxes, labels
 
