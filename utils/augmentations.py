@@ -41,7 +41,7 @@ def crop_bounding_box(image, boxes, labels):
 
     # set bounding box to 0, 0, left + width, top + height
     new_boxes =[]
-    new_boxes.append([0, 0, int(width), int(height), labels])
+    new_boxes.append([0, 0, int(width), int(height)])
 
     current_image = image
     # crop images to width = xmax - xmin & height = ymax - ymin
@@ -253,6 +253,7 @@ class RandomSampleCrop(object):
         height, width, _ = image.shape
         while True:
             # randomly choose a mode
+            print(boxes)
             mode = random.choice(self.sample_options)
             if mode is None:
                 return image, boxes, labels
