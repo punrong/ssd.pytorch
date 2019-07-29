@@ -33,6 +33,7 @@ def jaccard_numpy(box_a, box_b):
 
 def crop_bounding_box(image, boxes, labels):
     # random select object
+    print(labels.shape)
     idx = random.choice(labels.size)
     current_labels = np.array(labels[idx])
 
