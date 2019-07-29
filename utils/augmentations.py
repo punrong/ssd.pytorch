@@ -37,6 +37,7 @@ def crop_bounding_box(image, boxes, labels):
     print(labels)
     print(labels.size)
     xmax = boxes[0:2]
+    print(xmax)
     xmin = boxes[0:0]
     ymax = boxes[0:3]
     ymin = boxes[0:1]
