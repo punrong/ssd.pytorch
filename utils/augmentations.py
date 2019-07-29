@@ -35,6 +35,7 @@ def crop_bounding_box(image, boxes, labels):
     # random select object
     idx = random.choice(labels.size)
     current_labels = np.array(labels[idx])
+    print(current_labels.shape)
 
     # get coordinate of the selected object
     xmin, ymin, xmax, ymax = boxes[idx]
