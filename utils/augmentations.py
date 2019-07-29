@@ -5,7 +5,6 @@ import numpy as np
 import types
 from numpy import random
 
-
 def intersect(box_a, box_b):
     max_xy = np.minimum(box_a[:, 2:], box_b[2:])
     min_xy = np.maximum(box_a[:, :2], box_b[:2])
@@ -32,6 +31,22 @@ def jaccard_numpy(box_a, box_b):
     union = area_a + area_b - inter
     return inter / union  # [A,B]
 
+def crop_bounding_box(image, boxes, labels):
+    # crop images to width = xmax - xmin & height = ymax - ymin
+    xmax = boxes[:, 2]
+    xmin = boxes[:, 0]
+    ymax = boxes[:, 3]
+    ymin = boxes[:, 1]
+
+    width = xmax - xmin
+    height = ymax - ymin
+    image = image[width, height]
+
+    # set bounding box to 0, 0, left + width, top + height
+    left, right = 0
+    boxes = [left, right, width, height]
+
+    return image, boxes, labels
 
 class Compose(object):
     """Composes several augmentations together.
@@ -241,7 +256,7 @@ class RandomSampleCrop(object):
             if mode is None:
                 return image, boxes, labels
             if mode is "bbox":
-                # image, boxes, labels = new_function(image, boxes, labels)
+                image, boxes, labels = crop_bounding_box(image, boxes, labels)
                 return image, boxes, labels
             min_iou, max_iou = mode
             if min_iou is None:
@@ -409,9 +424,9 @@ class SSDAugmentation(object):
             ConvertFromInts(),
             ToAbsoluteCoords(),
             PhotometricDistort(),
+            RandomSampleCrop(),
             # change the position of expand function
             Expand(self.mean),
-            RandomSampleCrop(),
             RandomMirror(),
             ToPercentCoords(),
             Resize(self.size),
