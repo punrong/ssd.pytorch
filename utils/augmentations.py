@@ -43,7 +43,8 @@ def crop_bounding_box(image, boxes, labels):
     image = image[int(width), int(height)]
 
     # set bounding box to 0, 0, left + width, top + height
-    left, right = 0
+    left = 0
+    right = 0
     boxes = [left, right, width, height]
 
     return image, boxes, labels
