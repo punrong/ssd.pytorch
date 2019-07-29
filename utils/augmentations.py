@@ -409,6 +409,7 @@ class SSDAugmentation(object):
             ConvertFromInts(),
             ToAbsoluteCoords(),
             PhotometricDistort(),
+            # change the position of expand function
             Expand(self.mean),
             RandomSampleCrop(),
             RandomMirror(),
