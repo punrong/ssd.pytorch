@@ -40,7 +40,7 @@ def crop_bounding_box(image, boxes, labels):
 
     width = xmax - xmin
     height = ymax - ymin
-    image = image[width, height]
+    image = image[int(width), int(height)]
 
     # set bounding box to 0, 0, left + width, top + height
     left, right = 0
