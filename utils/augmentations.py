@@ -33,22 +33,13 @@ def jaccard_numpy(box_a, box_b):
 
 def crop_bounding_box(image, boxes, labels):
     idx = random.choice(labels.size)
+    current_labels = labels[idx]
+
     xmin, ymin, xmax, ymax = boxes[idx]
-    print(boxes[idx])
-    print(xmin)
-    print(ymin)
-    print(xmax)
-    print(ymax)
-
-
-    new_boxes = []
-    # xmax = boxes[idx:2]
-    # xmin = boxes[idx:0]
-    # ymax = boxes[idx:3]
-    # ymin = boxes[idx:1]
     width = xmax - xmin
     height = ymax - ymin
 
+    new_boxes =[]
     # set bounding box to 0, 0, left + width, top + height
     new_boxes.append([0, 0, width, height])
 
@@ -57,7 +48,7 @@ def crop_bounding_box(image, boxes, labels):
     current_image = current_image[new_boxes[1]:new_boxes[3], new_boxes[0]:new_boxes[2],
                     :]
 
-    return current_image, new_boxes, labels
+    return current_image, new_boxes, current_labels
 
 class Compose(object):
     """Composes several augmentations together.
