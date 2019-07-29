@@ -45,11 +45,10 @@ def crop_bounding_box(image, boxes, labels):
     # new bounding box
     new_box = np.array([0, 0, width, height])
     new_box = np.array(new_box).reshape(-1, 4)
-    print(new_box[0])
 
     # cropped image
     current_image = image
-    current_image = current_image[new_box[1]:new_box[3], new_box[0]:new_box[2], :]
+    current_image = current_image[new_box[0,1]:new_box[0,3], new_box[0,0]:new_box[0,2], :]
     # print(current_image.shape)
 
     return current_image, new_box, current_labels
