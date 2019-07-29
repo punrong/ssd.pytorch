@@ -33,12 +33,12 @@ def jaccard_numpy(box_a, box_b):
 
 def crop_bounding_box(image, boxes, labels):
     new_boxes = []
-    for c in boxes:
+    for i in boxes.size:
 
-        xmax = c[2]
-        xmin = c[0]
-        ymax = c[3]
-        ymin = c[4]
+        xmax = boxes[i:2]
+        xmin = boxes[i:0]
+        ymax = boxes[i:3]
+        ymin = boxes[i:4]
         width = xmax - xmin
         height = ymax - ymin
 
