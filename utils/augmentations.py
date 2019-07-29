@@ -35,7 +35,6 @@ def crop_bounding_box(image, boxes, labels):
     # random select object
     idx = random.choice(labels.size)
     current_labels = np.array(labels[idx])
-    labels = np.array(labels).reshape(-1,-1)
 
     # get coordinate of the selected object
     xmin, ymin, xmax, ymax = boxes[idx]
@@ -50,7 +49,7 @@ def crop_bounding_box(image, boxes, labels):
     current_image = image
     current_image = current_image[0:int(width), 0:int(height)]
 
-    return current_image, new_box, labels
+    return current_image, new_box, current_labels
 
 class Compose(object):
     """Composes several augmentations together.
