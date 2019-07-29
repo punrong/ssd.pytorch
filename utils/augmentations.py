@@ -48,7 +48,7 @@ def crop_bounding_box(image, boxes, labels):
 
     # cropped image
     current_image = image
-    current_image = current_image[0:int(width), 0:int(height)]
+    current_image = current_image[0:int(height), 0:int(width), :]
     print(current_image.shape)
 
     return current_image, new_box, current_labels
